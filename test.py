@@ -20,6 +20,7 @@ if __name__ == '__main__':
     # create a website
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.epoch))  # define the website directory
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
+
     if opt.eval:
         model.eval()
     for i, data in enumerate(dataset):

@@ -25,6 +25,7 @@ The required Python packages are:
 * torchvision>=0.2.1
 * dominate>=2.3.1
 * visdom>=0.1.8.3
+* [faiss](https://github.com/facebookresearch/faiss/blob/master/INSTALL.md) 
 
 ## Pre-trained Models
 
@@ -52,7 +53,39 @@ python test.py --dataroot ./datasets/landscape2photo --name landscape2photo --nu
 
 ## Training
 
-The training code will be available soon.
+**Note: for simplicity, the released training code does not include the regular update of semantic masks from the generated images. In this code, original painting masks are kept fixed.**
+
+To run the training code, download the following zip folder containing RGB patches of real landscapes, FAISS indexes and masks from Monet and landscape paintings:
+* [[data for patch retrieval]](https://drive.google.com/file/d/1iLt2g9wuFeZ2vYyJuQo_kdhOqwl9_j9C/view?usp=sharing) 
+
+Place it under the root code folder (*i.e.* `./data_for_patch_retrieval`).
+
+Run `python train.py` using the following arguments:
+
+| Argument | Possible values |
+|------|------|
+| `--dataroot` | Dataset root folder containing the `trainA` and `trainB` directories |
+| `--name ` | Name of the experiment. It decides where to store samples and models |
+| `--no_flip ` | Since artistic masks are fixed, we do not random flip images during training |
+| `--patch_size_1 ` | Height and width of the first scale patches |
+| `--stride_1 ` | Stride of the first scale patches |
+| `--patch_size_2 ` | Height and width of the second scale patches |
+| `--stride_2 ` | Stride of the second scale patches |
+| `--patch_size_3 ` | Height and width of the third scale patches |
+| `--stride_3 ` | Stride of the third scale patches |
+| `--which_mem_bank ` | `./data_for_patch_retrieval` |
+| `--artistic_masks_dir ` | `masks_of_artistic_images_monet`, `masks_of_artistic_images_landscape` |
+| `--preload_mem_patches ` | If specified, load all RGB patches in memory |
+| `--preload_indexes ` | If specified, load all FAISS indexes in memory |
+
+* Required RAM for both RGB patches and FAISS indexes: ~40 GB.
+
+* Specify only `--patch_size_1 ` and `--stride_1 ` to run the single-scale version.
+
+For example, to train the model on the landscape2photo setting, use:
+```
+python train.py --dataroot ./datasets/landscape2photo --name landscape2photo --no_dropout --display_id 0 --no_flip --niter_decay 100 --no_flip --patch_size_1 16 --stride_1 6 --patch_size_2 8 --stride_2 5 --patch_size_3 --stride_3 4 --which_mem_bank ./data_for_patch_retrieval --artistic_masks_dir masks_of_artistic_images_landscape --preload_mem_patches --preload_indexes
+```
 
 <p align="center">
 <img src="images/samples02.gif" alt="Art2Real" />

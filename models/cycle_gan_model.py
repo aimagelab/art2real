@@ -3,6 +3,7 @@ import itertools
 from util.image_pool import ImagePool
 from .base_model import BaseModel
 from . import networks
+from models.contextual_loss import Contextual_loss
 
 
 class CycleGANModel(BaseModel):
@@ -52,7 +53,7 @@ class CycleGANModel(BaseModel):
         """
         BaseModel.__init__(self, opt)
         # specify the training losses you want to print out. The training/test scripts will call <BaseModel.get_current_losses>
-        self.loss_names = ['D_A', 'G_A', 'cycle_A', 'idt_A', 'D_B', 'G_B', 'cycle_B', 'idt_B']
+        self.loss_names = ['D_A', 'G_A', 'cycle_A', 'idt_A', 'D_B', 'G_B', 'cycle_B', 'idt_B', 'cx']
         # specify the images you want to save/display. The training/test scripts will call <BaseModel.get_current_visuals>
         # visual_names_A = ['real_A', 'fake_B', 'rec_A']
         # visual_names_B = ['real_B', 'fake_A', 'rec_B']
@@ -65,6 +66,10 @@ class CycleGANModel(BaseModel):
         self.visual_names = visual_names_A + visual_names_B  # combine visualizations for A and B
         # specify the models you want to save to the disk. The training/test scripts will call <BaseModel.save_networks> and <BaseModel.load_networks>.
         if self.isTrain:
+            self.contextual = Contextual_loss(opt.patch_size_1, opt.patch_size_2, opt.patch_size_3, opt.stride_1,
+                                              opt.stride_2, opt.stride_3, opt.contextual_weight, opt.k, opt.preload_indexes,
+                                              opt.preload_mem_patches, opt.name, opt.artistic_masks_dir,
+                                              opt.which_mem_bank)
             self.model_names = ['G_A', 'G_B', 'D_A', 'D_B']
         else:  # during test time, only load Gs
             self.model_names = ['G_A', 'G_B']
@@ -106,6 +111,7 @@ class CycleGANModel(BaseModel):
 
         The option 'direction' can be used to swap domain A and domain B.
         """
+        self.art_img_name = [input['A_paths'][i].split('/')[-1] for i in range(len(input['A_paths']))]
         AtoB = self.opt.direction == 'AtoB'
         self.real_A = input['A' if AtoB else 'B'].to(self.device)
         self.real_B = input['B' if AtoB else 'A'].to(self.device)
@@ -176,7 +182,8 @@ class CycleGANModel(BaseModel):
         # Backward cycle loss || G_A(G_B(B)) - B||
         self.loss_cycle_B = self.criterionCycle(self.rec_B, self.real_B) * lambda_B
         # combined loss and calculate gradients
-        self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
+        self.loss_cx = self.contextual.compute_contextual(self.fake_B, self.art_img_name)
+        self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B + self.loss_cx * self.contextual.weight
         self.loss_G.backward()
 
     def optimize_parameters(self):
