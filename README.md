@@ -29,9 +29,9 @@ The required Python packages are:
 
 ## Pre-trained Models
 
-* **Monet2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/1XciFP86aKuYoWUWKXgGaBVrZrWx6vjxe?usp=sharing) [[Dataset]](https://drive.google.com/file/d/14fZ-Qu-AwQ3Yy8xJZZxzrnumirkjt4qC/view?usp=sharing)
-* **Landscape2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/1rmYKPYFu3FGwfrkAAGaqn1G7R-fODj41?usp=sharing) [[Dataset]](https://drive.google.com/file/d/17UMyQQkUrDk3CwmelaYW_Tj6E8vkBoUf/view?usp=sharing)
-* **Portrait2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/12Vr6oceBzi4NWRZsyF7eUg-3WTZdh8Lv?usp=sharing) [[Dataset]](https://drive.google.com/file/d/1Q1VkesUNZXPBafUgZ2FIaIKoFTSG7YN1/view?usp=sharing)
+* **Monet2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/1XciFP86aKuYoWUWKXgGaBVrZrWx6vjxe?usp=sharing) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%202019%20-%20Art2Real/datasets/monet2photo.zip)
+* **Landscape2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/1rmYKPYFu3FGwfrkAAGaqn1G7R-fODj41?usp=sharing) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%202019%20-%20Art2Real/datasets/landscape2photo.zip)
+* **Portrait2Photo** [[Checkpoints]](https://drive.google.com/drive/folders/12Vr6oceBzi4NWRZsyF7eUg-3WTZdh8Lv?usp=sharing) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%202019%20-%20Art2Real/datasets/portrait2photo.zip)
 
 Download pre-trained models and place them under the checkpoint folder. For example, when downloading the monet2photo checkpoints, place them under the folder `./checkpoints/monet2photo/`.
 
@@ -56,7 +56,7 @@ python test.py --dataroot ./datasets/landscape2photo --name landscape2photo --nu
 **Note: for simplicity, the released training code does not include the regular update of semantic masks from the generated images. In this code, original painting masks are kept fixed.**
 
 To run the training code, download the following zip folder containing RGB patches of real landscapes, FAISS indexes and masks from Monet and landscape paintings:
-* [[data for patch retrieval]](https://drive.google.com/file/d/1iLt2g9wuFeZ2vYyJuQo_kdhOqwl9_j9C/view?usp=sharing) 
+* [[data for patch retrieval]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%202019%20-%20Art2Real/data_for_patch_retrieval.zip) 
 
 Place it under the root code folder (*i.e.* `./data_for_patch_retrieval`).
 
