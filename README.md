@@ -29,9 +29,9 @@ The required Python packages are:
 
 ## Pre-trained Models
 
-* **Monet2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/checkpoints/monet2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/datasets/monet2photo.zip)
-* **Landscape2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/checkpoints/landscape2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/datasets/landscape2photo.zip)
-* **Portrait2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/checkpoints/portrait2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/datasets/portrait2photo.zip)
+* **Monet2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/checkpoints/monet2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/datasets/monet2photo.zip)
+* **Landscape2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/checkpoints/landscape2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/datasets/landscape2photo.zip)
+* **Portrait2Photo** [[Checkpoints]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/checkpoints/portrait2photo.zip) [[Dataset]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/datasets/portrait2photo.zip)
 
 Download pre-trained models and place them under the checkpoint folder. For example, when downloading the monet2photo checkpoints, place them under the folder `./checkpoints/monet2photo/`.
 
@@ -56,7 +56,7 @@ python test.py --dataroot ./datasets/landscape2photo --name landscape2photo --nu
 **Note: for simplicity, the released training code does not include the regular update of semantic masks from the generated images. In this code, original painting masks are kept fixed.**
 
 To run the training code, download the following zip folder containing RGB patches of real landscapes, FAISS indexes and masks from Monet and landscape paintings:
-* [[data for patch retrieval]](https://ailb-web.ing.unimore.it/publicfiles/drive/art2real/data_for_patch_retrieval.zip) 
+* [[data for patch retrieval]](https://ailb-web.ing.unimore.it/publicfiles/drive/CVPR%2019%-%Art2Real/data_for_patch_retrieval.zip) 
 
 Place it under the root code folder (*i.e.* `./data_for_patch_retrieval`).
 
